@@ -12,6 +12,7 @@
 
 package statPre;
 //A package in Java is used to group related classes.
+import java.io.File;
 import java.io.BufferedReader;
 import java.util.Comparator;
 import java.io.InputStreamReader;
@@ -22,22 +23,14 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import javax.swing.JOptionPane;
 import java.util.Arrays;
 import java.util.ArrayList;
-import javax.swing.ImageIcon;
-import java.io.PrintWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.awt.Image;
-import java.util.Map.Entry;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.util.CellUtil;
-import java.io.File;
 import java.io.FileInputStream;
 
 
@@ -63,15 +56,6 @@ public class StatsForWeather {
    private static ArrayList<NationalsPlayer> listOfGames=new ArrayList<NationalsPlayer>();
    private static int currentPlayer=-1;
    private static String[] battingSide = {"Right", "Left", "Switch"};
-   
-   // Convert Gson to Json//
-   //Gson is an open-source Java library to serialize and deserialize Java objects to JSON//
-   public static Map<String, Object> jsonToMap(String str) {
-      Map<String, Object> map = new Gson().fromJson(
-      str, new TypeToken<HashMap<String, Object>>() {}.getType());
-      return map;
-      
-      }
   
    public static void main(String[] args) throws IOException {
 
@@ -148,7 +132,6 @@ public class StatsForWeather {
             } catch (Exception e) {
                System.out.println("Error processing row " + row.getRowNum() + ": " + e.getMessage());
             }
-        System.out.print(listOfPlayers); //Test that the list is imported
         workbook.close();
         fileIn.close();
       }
@@ -443,9 +426,9 @@ public class StatsForWeather {
              rd.close();
              System.out.println(data);
       //Found This To Convert Json To Map
-             Map<String, Object> respMap = jsonToMap(data.toString());
-             Map<String, Object> mainMap = jsonToMap(respMap.get("main").toString());
-             Map<String, Object> windMap = jsonToMap(respMap.get("wind").toString());
+             Map<String, Object> respMap = WeatherAPI.jsonToMap(data.toString());
+             Map<String, Object> mainMap = WeatherAPI.jsonToMap(respMap.get("main").toString());
+             Map<String, Object> windMap = WeatherAPI.jsonToMap(respMap.get("wind").toString());
       //Casting to create an ArrayList
       //To get percipitation I will need the paid API_Key
              ArrayList<Map<String, Object>> weather = (ArrayList<Map<String, Object>>)respMap.get("weather");
@@ -477,7 +460,7 @@ public class StatsForWeather {
              ng.setPredictedPlayerAvgTy((((ng.getPlayer().getLyOptHits()+ng.getPlayer().getTyOptHits())/
                                          (ng.getPlayer().getLyTotalHits()+ng.getPlayer().getTyTotalHits()))*
                                          ng.getPlayer().getTyBattingAverage())/probOfOptTemp);
-                                         
+            /* I can remove this once I refactor prediction logic */                    
              System.out.println(probOfOptTemp);
              //Debugging: Print values to check
              System.out.println("Debug Info: ");
