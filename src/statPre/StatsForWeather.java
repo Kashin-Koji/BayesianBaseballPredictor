@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.util.CellUtil;
 import java.io.FileInputStream;
@@ -305,8 +306,6 @@ public class StatsForWeather {
 
    public static void predict() throws IOException {
       boolean flagNGames = true;
-      int totalNumberOfGames = 0;
-      int totalNumberOfGamesInOp = 0;
       double probOfOptTemp;
       NationalsPlayer ng = new NationalsPlayer(); // ng stands for new game
       String excelFilePath = "statPre//TempRangeData.xlsx";
@@ -314,9 +313,6 @@ public class StatsForWeather {
       do {
          find();
          BatterwStats selectedPlayer = listOfPlayers.get(currentPlayer);
-         String lastName = selectedPlayer.getLastName();
-         String firstName = selectedPlayer.getFirstName();
-
          // Set ng player to
          ng.setPlayer(selectedPlayer);
          ng.setNewGame(JOptionVCheck.getIntDialog("What game number is this?", "Game Number?",
@@ -371,7 +367,6 @@ public class StatsForWeather {
          ng.setTeamAgainst((String) question);
          System.out.println();
 
-         // Found This To Convert Json To Map
          Map<String, Object> respMap = WeatherAPI.getWeather(location, API_Key);
          Map<String, Object> mainMap = WeatherAPI.jsonToMap(respMap.get("main").toString());
          Map<String, Object> windMap = WeatherAPI.jsonToMap(respMap.get("wind").toString());
@@ -386,79 +381,16 @@ public class StatsForWeather {
                      "Current Wind Speed (mile/hour): " + windMap.get("speed"));
          ng.setGameTemp(Double.parseDouble(mainMap.get("feels_like").toString()));
 
-         FileInputStream inputstream = new FileInputStream(excelFilePath);
-         XSSFWorkbook workbook = new XSSFWorkbook(inputstream);
-         XSSFSheet sheet = workbook.getSheet("Sheet1");
-         totalNumberOfGames = 0;
-         totalNumberOfGamesInOp = 0;
-         boolean playerFound = false;
+         int gameData[] = ExcelInputOutput.getPlayerLog(selectedPlayer, ng, excelFilePath);
 
-         for (Row row : sheet) {
-            if (row.getCell(0) != null && row.getCell(1) != null &&
-                  row.getCell(0).getStringCellValue().equals(lastName) &&
-                  row.getCell(1).getStringCellValue().equals(firstName)) {
-               playerFound = true;
-               if (row.getCell(2) != null && row.getCell(2).getCellType() == CellType.NUMERIC) {
-                  totalNumberOfGames = (int) row.getCell(2).getNumericCellValue();
-               } else {
-                  System.out.println("Cell for totalNumberOfGames is not numeric or is empty");
-               }
-               int tempColumnIndex = 0;
-               if (ng.getGameTemp() <= 55) {
-                  tempColumnIndex = 5;
-               } else if (ng.getGameTemp() <= 65) {
-                  tempColumnIndex = 8;
-               } else if (ng.getGameTemp() <= 75) {
-                  tempColumnIndex = 11;
-               } else if (ng.getGameTemp() <= 85) {
-                  tempColumnIndex = 14;
-               } else if (ng.getGameTemp() <= 95) {
-                  tempColumnIndex = 17;
-               } else if (ng.getGameTemp() <= 105) {
-                  tempColumnIndex = 20;
-               }
-
-               if (tempColumnIndex > 0 && row.getCell(tempColumnIndex) != null
-                     && row.getCell(tempColumnIndex).getCellType() == CellType.NUMERIC) {
-                  totalNumberOfGamesInOp = (int) row.getCell(tempColumnIndex).getNumericCellValue();
-               } else {
-                  System.out.println(
-                        "Cell for totalNumberOfGamesInOp is not numeric, is empty, or tempColumnIndex is not set");
-               }
-               break;
-            }
-         }
-
-         workbook.close();
-         inputstream.close();
-
-         if (!playerFound) {
-            System.out.println("Player not found in Excel file");
-         } else {
-            System.out.println("Total number of games: " + totalNumberOfGames);
-         }
-
-         if (totalNumberOfGames > 0) {
-            probOfOptTemp = (double) totalNumberOfGamesInOp / totalNumberOfGames; // Cast to double for floating-point
+         if (gameData[0] > 0) {
+            probOfOptTemp = (double) gameData[1] / gameData[0]; // Cast to double for floating-point
                                                                                   // division
          } else {
             probOfOptTemp = 0; // Handle the case where totalNumberOfGames is 0 to avoid division by zero
          }
 
          ng.setPredictedPlayerAvgTy((((double)(ng.getPlayer().getLyOptHits() + ng.getPlayer().getTyOptHits()) /
-               (ng.getPlayer().getLyTotalHits() + ng.getPlayer().getTyTotalHits())) *
-               ng.getPlayer().getTyBattingAverage()) / probOfOptTemp);
-         /* I can remove this once I refactor prediction logic */
-         System.out.println(probOfOptTemp);
-         // Debugging: Print values to check
-         System.out.println("Debug Info: ");
-         System.out.println("Total number of games (totalNumberOfGames): " + totalNumberOfGames);
-         System.out.println(
-               "Total number of games in optimal temperature (totalNumberOfGamesInOp): " + totalNumberOfGamesInOp);
-         System.out.println("Game Temperature (ng.getGameTemp()): " + ng.getGameTemp());
-         System.out.println("Probability of Optimal Temperature (probOfOptTemp): " + probOfOptTemp * 100);
-         // I think the issue has to do with the NationalsPlayer class
-         System.out.println((((double)(ng.getPlayer().getLyOptHits() + ng.getPlayer().getTyOptHits()) /
                (ng.getPlayer().getLyTotalHits() + ng.getPlayer().getTyTotalHits())) *
                ng.getPlayer().getTyBattingAverage()) / probOfOptTemp);
 
