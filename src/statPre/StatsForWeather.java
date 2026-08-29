@@ -370,124 +370,16 @@ public class StatsForWeather {
    }
 
    public static void save(List<BatterwStats> listOfPlayers) throws IOException {
-      Workbook workbook = new XSSFWorkbook();
-      Sheet sheet = workbook.createSheet("Player Stats");
+      
+      ExcelInputOutput.savePlayerData(listOfPlayers);
 
-      // Assuming the first row contains headers
-      String[] headers = { "Jersey Number", "Last Name", "First Name", "Bat Dominance",
-            "LY Total Hits", "LY Opt Hits", "LY At Bats",
-            "TY Total Hits", "TY Opt Hits", "TY At Bats" };
-      Row headerRow = sheet.createRow(0);
-      for (int i = 0; i < headers.length; i++) {
-         headerRow.createCell(i).setCellValue(headers[i]);
-      }
-
-      int rowNum = 1;
-      for (BatterwStats player : listOfPlayers) {
-         Row row = sheet.createRow(rowNum++);
-         row.createCell(0).setCellValue(player.getJerseyNumber());
-         row.createCell(1).setCellValue(player.getLastName());
-         row.createCell(2).setCellValue(player.getFirstName());
-         row.createCell(3).setCellValue(player.getBatDominance());
-         row.createCell(4).setCellValue(player.getLyTotalHits());
-         row.createCell(5).setCellValue(player.getLyOptHits());
-         row.createCell(6).setCellValue(player.getLyAtBats());
-         row.createCell(7).setCellValue(player.getTyTotalHits());
-         row.createCell(8).setCellValue(player.getTyOptHits());
-         row.createCell(9).setCellValue(player.getTyAtBats());
-      }
-
-      try (FileOutputStream fileOut = new FileOutputStream("statPre//NBLUP.xlsx")) {
-         Workbook workbook2 = new XSSFWorkbook();
-         workbook.write(fileOut);
-      }
-      workbook.close();
-      System.out.println("Excel file written successfully.");
    }
 
    public static void savePredict() throws IOException {
+      
       String excelFilePath = "statPre//Predictions.xlsx";
-      Workbook workbook;
-      Sheet sheet;
-
-      // Check if file exists
-      File file = new File(excelFilePath);
-      if (file.exists()) {
-         // Open the existing workbook and sheet
-         FileInputStream inputStream = new FileInputStream(file);
-         workbook = new XSSFWorkbook(inputStream);
-         sheet = workbook.getSheetAt(0);
-      } else {
-         // Create new workbook and sheet
-         workbook = new XSSFWorkbook();
-         sheet = workbook.createSheet("Predictions");
-      }
-
-      // Create header row if workbook is new
-      if (file.length() == 0) {
-         Row headerRow = sheet.createRow(0);
-         String[] headers = { "Team Against", "Game Number", "Game Temperature", "Predicted Player Avg Ty",
-               "TY Batting Average", "TY Total Hits", "TY Opt Hits", "LY Total Hits", "LY Opt Hits",
-               "Last Name", "First Name" };
-         for (int i = 0; i < headers.length; i++) {
-            headerRow.createCell(i).setCellValue(headers[i]);
-         }
-      }
-
-      // Append data
-      int rowCount = sheet.getLastRowNum() + 1;
-      for (NationalsPlayer ng : listOfGames) {
-         BatterwStats player = ng.getPlayer();
-         Row row = sheet.createRow(rowCount++);
-         row.createCell(0).setCellValue(ng.getTeamAgainst());
-         row.createCell(1).setCellValue(ng.getNewGame());
-         row.createCell(2).setCellValue(ng.getGameTemp());
-         row.createCell(3).setCellValue(ng.getPredictedPlayerAvgTy());
-         row.createCell(4).setCellValue(player.getTyBattingAverage());
-         row.createCell(5).setCellValue(player.getTyTotalHits());
-         row.createCell(6).setCellValue(player.getTyOptHits());
-         row.createCell(7).setCellValue(player.getLyTotalHits());
-         row.createCell(8).setCellValue(player.getLyOptHits());
-         row.createCell(9).setCellValue(player.getLastName());
-         row.createCell(10).setCellValue(player.getFirstName());
-      }
-
-      // Sort by last name and first name
-      if (rowCount > 1) { // If there's data to sort
-         List<Row> rows = new ArrayList<>();
-         for (int i = 1; i < rowCount; i++) {
-            rows.add(sheet.getRow(i));
-         }
-         rows.sort(Comparator.comparing(r -> r.getCell(9).getStringCellValue() + r.getCell(10).getStringCellValue()));
-
-         // Rows in sorted order
-         int rowId = 1;
-         for (Row rowData : rows) {
-            Row row = CellUtil.getRow(rowId++, sheet);
-            for (int cn = 0; cn < rowData.getLastCellNum(); cn++) {
-               Cell cell = CellUtil.getCell(row, cn);
-               Cell c = rowData.getCell(cn, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
-               switch (c.getCellType()) {
-                  case STRING:
-                     cell.setCellValue(c.getStringCellValue());
-                     break;
-                  case NUMERIC:
-                     cell.setCellValue(c.getNumericCellValue());
-                     break;
-                  // I can add more other cases if necessary such as if my data is expanded!!!!!!!
-               }
-            }
-         }
-      }
-
-      // Write changes to the file
-      try (FileOutputStream outputStream = new FileOutputStream(excelFilePath)) {
-         workbook.write(outputStream);
-      }
-
-      // Close workbook
-      workbook.close();
-      System.out.println("Predictions saved to Excel file.");
+      ExcelInputOutput.savePredictionData(listOfGames, excelFilePath);
+      
    }
 
    public static void find() {
