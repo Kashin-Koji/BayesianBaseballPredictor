@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import com.google.gson.*;
 import com.google.gson.reflect.*;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.util.CellUtil;
 import java.io.FileInputStream;
@@ -102,40 +101,9 @@ public class StatsForWeather {
    }// main
 
    public static void open() throws IOException {
-      listOfPlayers = new ArrayList<>();
-      FileInputStream fileIn = new FileInputStream("statPre//NBLUP.xlsx");
-      Workbook workbook = new XSSFWorkbook(fileIn);
-      Sheet sheet = workbook.getSheetAt(0);
-
-      for (Row row : sheet) {
-         // Skipping the header row
-
-         if (row.getRowNum() == 0)
-            continue;
-
-         try {
-
-            BatterwStats player = new BatterwStats();
-            player.setJerseyNumber((int) row.getCell(0).getNumericCellValue());
-            player.setLastName(row.getCell(1).getStringCellValue());
-            player.setFirstName(row.getCell(2).getStringCellValue());
-            player.setBatDominance(row.getCell(3).getStringCellValue());
-            player.setLyTotalHits((int) row.getCell(4).getNumericCellValue());
-            player.setLyOptHits((int) row.getCell(5).getNumericCellValue());
-            player.setLyAtBats((int) row.getCell(6).getNumericCellValue());
-            player.setTyTotalHits((int) row.getCell(7).getNumericCellValue());
-            player.setTyOptHits((int) row.getCell(8).getNumericCellValue());
-            player.setTyAtBats((int) row.getCell(9).getNumericCellValue());
-
-            listOfPlayers.add(player);
-            System.out.println("Added player: " + player); // Debugging line
-         } catch (Exception e) {
-            System.out.println("Error processing row " + row.getRowNum() + ": " + e.getMessage());
-         }
-         workbook.close();
-         fileIn.close();
-      }
-
+      
+      listOfPlayers = ExcelInputOutput.openPlayerExcel("statPre//NBLUP.xlsx");
+      
    }
 
    public static void addBatter() {
