@@ -12,22 +12,12 @@
 package statPre;
 
 //A package in Java is used to group related classes.
-import java.io.File;
-import java.util.Comparator;
-import java.io.FileOutputStream;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import java.util.Arrays;
 import java.util.ArrayList;
-import com.google.gson.*;
-import com.google.gson.reflect.*;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.*;
-import org.apache.poi.ss.util.CellUtil;
-import java.io.FileInputStream;
 
 public class StatsForWeather {
    // Improvements
@@ -44,7 +34,7 @@ public class StatsForWeather {
    // Apache
    // Excel integration
 
-   // Total player hits during optimal weather conditions (56-75)//
+   // Total player hits during optimal weather conditions (56-75) //
    int totalPlayerHits_Optimal = 0;
    // Bayes' Theorem = P(A|B) = (P(B|A) * P(A))/P(B)//
    public static ArrayList<BatterwStats> listOfPlayers = new ArrayList<>();
