@@ -209,7 +209,7 @@ public class StatsForWeather {
                         Integer.parseInt(JOptionPane.showInputDialog(null, "What is the batters new jersey number?",
                               "Jersey Number: " + curBat.getJerseyNumber(), JOptionPane.QUESTION_MESSAGE)));
                   break;
-               case "Last name":
+               case "Last Name":
                   curBat.setLastName(JOptionPane.showInputDialog(null, "What is the batters last name?",
                         "Last Name: " + curBat.getLastName(), JOptionPane.QUESTION_MESSAGE));
                   break;
@@ -232,7 +232,7 @@ public class StatsForWeather {
                         "How many hits did the batter get when the temperature was optimal last year?",
                         "Last Years Optimal Hits: " + curBat.getLyOptHits(), JOptionPane.QUESTION_MESSAGE)));
                   break;
-               case "Last Years At Bats":
+               case "Last Years Total At Bats":
                   curBat.setLyAtBats(Integer
                         .parseInt(JOptionPane.showInputDialog(null, "How many at bats did the batter get last year?",
                               "Last Years Total Hits: " + curBat.getLyAtBats(), JOptionPane.QUESTION_MESSAGE)));

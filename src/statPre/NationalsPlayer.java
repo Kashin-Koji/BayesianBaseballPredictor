@@ -12,7 +12,7 @@ package statPre;
 
 public class NationalsPlayer {
    // Attributes:
-   private static double gameTemp;
+   private double gameTemp;
    private int newGame;
    private BatterwStats player;
    private double predictedPlayerAvgTy;
