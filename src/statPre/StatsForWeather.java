@@ -3,7 +3,7 @@
 // File: StatsForWeather.java
 // Authors: Usoff Samantar/Honors Mentor/Professor Frank Seidel
 // Description: In this code I have 
-// created/edited a database system where I store
+// created a database system where I store
 // batter statistics, as well as use weather 
 // data (temperature) currently to try to 
 // predict per game batting average.
@@ -101,9 +101,9 @@ public class StatsForWeather {
    }// main
 
    public static void open() throws IOException {
-      
+
       listOfPlayers = ExcelInputOutput.openPlayerExcel("statPre//NBLUP.xlsx");
-      
+
    }
 
    public static void addBatter() {
@@ -275,50 +275,28 @@ public class StatsForWeather {
    public static void predict() throws IOException {
       boolean flagNGames = true;
       double probOfOptTemp;
-      NationalsPlayer ng = new NationalsPlayer(); // ng stands for new game
+      
       String excelFilePath = "statPre//TempRangeData.xlsx";
 
       do {
+
+         NationalsPlayer ng = new NationalsPlayer(); // ng stands for new game
          find();
+
+         // Return to main if no player was selected // 
+         if (currentPlayer < 0) {
+            return;
+         }
+
          BatterwStats selectedPlayer = listOfPlayers.get(currentPlayer);
          // Set ng player to
          ng.setPlayer(selectedPlayer);
          ng.setNewGame(JOptionVCheck.getIntDialog("What game number is this?", "Game Number?",
                "The game number must be an integer."));
 
-         Map<String, String> cities = new HashMap<>();
-         // Key:Value// //Key is has to be unique, but Value can be same-2 teams in
-         // Chicago//
-         cities.put("Milwaukee Brewers", "5263045");
-         cities.put("Los Angeles Angels", "5323810");
-         cities.put("St. Louis Cardinals", "4407066");
-         cities.put("Arizona Diamondbacks", "5308655");
-         cities.put("New York Mets", "5133268");
-         cities.put("Philadelphia Phillies", "5205788");
-         cities.put("Detroit Tigers", "4990729");
-         cities.put("Colorado Rockies", "5419384");
-         cities.put("Los Angeles Dodgers", "5368361");
-         cities.put("Boston Red Sox", "4930956");
-         cities.put("Texas Rangers", "4671240");
-         cities.put("Cincinnati Reds", "4508722");
-         cities.put("Chicago White Sox", "4887398");
-         cities.put("Kansas City Royals", "4393217");
-         cities.put("Miami Marlins", "4164138");
-         cities.put("Houston Astros", "4699066");
-         cities.put("Washington Nationals", "4140963");
-         cities.put("San Francisco Giants", "5391959");
-         cities.put("Baltimore Orioles", "4347778");
-         cities.put("San Diego Padres", "5391811");
-         cities.put("Pittsburgh Pirates", "5206379");
-         cities.put("Cleveland Guardians", "5150529");
-         cities.put("Oakland Athletics", "5378538");
-         cities.put("Toronto Blue Jays", "6167865");
-         cities.put("Seattle Mariners", "5809844");
-         cities.put("Minnesota Twins", "5037649");
-         cities.put("Tampa Bay Rays", "4171563");
-         cities.put("Atlanta Braves", "4180439");
-         cities.put("Chicago Cubs", "4887398");
-         cities.put("New York Yankees", "5110253");
+         // Create the city map //
+         Map<String, String> cities = WeatherAPI.createMap();
+
          String[] key = cities.keySet().toArray(new String[0]);
          Arrays.sort(key);
 
@@ -331,6 +309,12 @@ public class StatsForWeather {
          String question = (String) JOptionPane.showInputDialog(null,
                "Which stadium are the Washington Nationals playing in?",
                "Teams", JOptionPane.PLAIN_MESSAGE, null, key, key[0]);
+         
+         // Return to main menu //
+         if (question == null) {
+            return;
+         }
+         
          String location = cities.get(question);
          ng.setTeamAgainst((String) question);
          System.out.println();
@@ -351,14 +335,15 @@ public class StatsForWeather {
 
          int gameData[] = ExcelInputOutput.getPlayerLog(selectedPlayer, ng, excelFilePath);
 
-         if (gameData[0] > 0) {
+         if (gameData[0] > 0 && gameData[1] > 0) {
             probOfOptTemp = (double) gameData[1] / gameData[0]; // Cast to double for floating-point
-                                                                                  // division
+                                                                // division
          } else {
-            probOfOptTemp = 0; // Handle the case where totalNumberOfGames is 0 to avoid division by zero
+            JOptionPane.showMessageDialog(null, "There is not enough temperature data to make a prediction for " + ng.getGameTemp() + " degrees.");
+            continue;
          }
 
-         ng.setPredictedPlayerAvgTy((((double)(ng.getPlayer().getLyOptHits() + ng.getPlayer().getTyOptHits()) /
+         ng.setPredictedPlayerAvgTy((((double) (ng.getPlayer().getLyOptHits() + ng.getPlayer().getTyOptHits()) /
                (ng.getPlayer().getLyTotalHits() + ng.getPlayer().getTyTotalHits())) *
                ng.getPlayer().getTyBattingAverage()) / probOfOptTemp);
 
@@ -370,16 +355,16 @@ public class StatsForWeather {
    }
 
    public static void save(List<BatterwStats> listOfPlayers) throws IOException {
-      
+
       ExcelInputOutput.savePlayerData(listOfPlayers);
 
    }
 
    public static void savePredict() throws IOException {
-      
+
       String excelFilePath = "statPre//Predictions.xlsx";
       ExcelInputOutput.savePredictionData(listOfGames, excelFilePath);
-      
+
    }
 
    public static void find() {
@@ -410,5 +395,6 @@ public class StatsForWeather {
          currentPlayer = -1;
       }
    }
+
 
 }

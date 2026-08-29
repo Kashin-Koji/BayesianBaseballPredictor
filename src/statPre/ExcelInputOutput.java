@@ -49,6 +49,8 @@ public class ExcelInputOutput {
                     tempColumnIndex = 17;
                 } else if (ng.getGameTemp() <= 105) {
                     tempColumnIndex = 20;
+                } else {
+                    System.out.println("There is no temperature data available for " + ng.getGameTemp() + " degrees.");
                 }
 
                 if (tempColumnIndex > 0 && row.getCell(tempColumnIndex) != null
