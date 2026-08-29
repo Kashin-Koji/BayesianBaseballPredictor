@@ -336,16 +336,13 @@ public class StatsForWeather {
          int gameData[] = ExcelInputOutput.getPlayerLog(selectedPlayer, ng, excelFilePath);
 
          if (gameData[0] > 0 && gameData[1] > 0) {
-            probOfOptTemp = (double) gameData[1] / gameData[0]; // Cast to double for floating-point
-                                                                // division
+            probOfOptTemp = Statistics.calculateOptimalTempProb(gameData[0], gameData[1]); 
          } else {
             JOptionPane.showMessageDialog(null, "There is not enough temperature data to make a prediction for " + ng.getGameTemp() + " degrees.");
             continue;
          }
 
-         ng.setPredictedPlayerAvgTy((((double) (ng.getPlayer().getLyOptHits() + ng.getPlayer().getTyOptHits()) /
-               (ng.getPlayer().getLyTotalHits() + ng.getPlayer().getTyTotalHits())) *
-               ng.getPlayer().getTyBattingAverage()) / probOfOptTemp);
+         ng.setPredictedPlayerAvgTy(Statistics.calculatePredictedAverage(ng, probOfOptTemp));
 
          listOfGames.add(ng);
          flagNGames = JOptionPane.showConfirmDialog(null, "Do you want to predict another game?", "Predict Another?",
