@@ -2,7 +2,7 @@
 // Title: StatsForWeather Class
 // File: StatsForWeather.java
 // Authors: Usoff Samantar/Honors Mentor/Professor Frank Seidel
-// Description: In this code I have 
+// Description: In this Java file I have 
 // created a database system where I store
 // batter statistics, as well as use weather 
 // data (temperature) currently to try to 
