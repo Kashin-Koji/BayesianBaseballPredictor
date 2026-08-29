@@ -2,11 +2,10 @@ package statPre;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
-import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.*;
 
 public class ExcelInputOutput {
@@ -58,8 +57,7 @@ public class ExcelInputOutput {
             }
         }
 
-        workbook.close();
-        inputstream.close();
+        
         if (!playerFound) {
             System.out.println("Player not found in Excel file");
         } else {
@@ -67,7 +65,52 @@ public class ExcelInputOutput {
             System.out.println("Total number of optimal games: " + totalNumberOfGamesInOp);
         }
 
+        workbook.close();
+        inputstream.close();
+
         return new int[] { totalNumberOfGames, totalNumberOfGamesInOp };
+    }
+
+    public static ArrayList<BatterwStats> openPlayerExcel(String filename) throws IOException {
+
+        ArrayList<BatterwStats> listOfPlayers = new ArrayList<BatterwStats>();
+        FileInputStream fileIn = new FileInputStream(filename);
+        Workbook workbook = new XSSFWorkbook(fileIn);
+        Sheet sheet = workbook.getSheetAt(0);
+
+        for (Row row : sheet) {
+            // Skipping the header row
+
+            if (row.getRowNum() == 0)
+                continue;
+
+            try {
+
+                BatterwStats player = new BatterwStats();
+                player.setJerseyNumber((int) row.getCell(0).getNumericCellValue());
+                player.setLastName(row.getCell(1).getStringCellValue());
+                player.setFirstName(row.getCell(2).getStringCellValue());
+                player.setBatDominance(row.getCell(3).getStringCellValue());
+                player.setLyTotalHits((int) row.getCell(4).getNumericCellValue());
+                player.setLyOptHits((int) row.getCell(5).getNumericCellValue());
+                player.setLyAtBats((int) row.getCell(6).getNumericCellValue());
+                player.setTyTotalHits((int) row.getCell(7).getNumericCellValue());
+                player.setTyOptHits((int) row.getCell(8).getNumericCellValue());
+                player.setTyAtBats((int) row.getCell(9).getNumericCellValue());
+
+                listOfPlayers.add(player);
+                System.out.println("Added player: " + player); // Debugging line
+            } catch (Exception e) {
+                System.out.println("Error processing row " + row.getRowNum() + ": " + e.getMessage());
+            }
+
+        }
+
+        workbook.close();
+        fileIn.close();
+
+        return listOfPlayers;
+
     }
 
 }
