@@ -231,9 +231,6 @@ public class StatsForWeather {
 
          String API_Key = System.getenv("OPENWEATHER_API_KEY");
 
-         // User Location //
-         // User Input //
-         // Cast Object To String //
          String question = (String) JOptionPane.showInputDialog(null,
                "Which stadium are the Washington Nationals playing in?",
                "Teams", JOptionPane.PLAIN_MESSAGE, null, key, key[0]);

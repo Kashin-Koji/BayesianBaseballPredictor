@@ -49,7 +49,6 @@ public class BatterwStats extends Batter {
       this.tyAtBats = tyBats;
       this.tyTotalOptTempHits = tyOpt;
       setTyBattingAverage();
-      ;
    }
 
    public BatterwStats(int jersey, String last, String first, String hand, int lyHits, int lyBats, int tyHits,
@@ -63,7 +62,6 @@ public class BatterwStats extends Batter {
       this.tyAtBats = tyBats;
       this.tyTotalOptTempHits = 0;
       setTyBattingAverage();
-      ;
    }
 
    // Mutators:
@@ -146,10 +144,6 @@ public class BatterwStats extends Batter {
 
    public String toString() {
       String result = super.toString();
-      //// private int jerseyNumber;
-      // private String lastName;
-      // private String firstName;
-      // private String batDominance;
       result += "Last Years Total Hits: " + getLyTotalHits() + "\n";
       result += "Last Years Optimal Temp Hits: " + getLyOptHits() + "\n";
       result += "Last Years Total At Bats: " + getLyAtBats() + "\n";
