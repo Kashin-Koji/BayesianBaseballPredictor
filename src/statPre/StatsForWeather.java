@@ -194,7 +194,7 @@ public class StatsForWeather {
    public static void updateStats() {
       find();
       String[] updateDatabase = { "Select attribute to update:", "Jersey Number", "Last Name", "First Name",
-            "Bat Dominance", "Last Years Total Hits", "Last Years Optimal Hits", "Last Years At Bats",
+            "Bat Dominance", "Last Years Total Hits", "Last Years Optimal Hits", "Last Years Total At Bats",
             "This Years Total Hits", "This Years Optimal Hits", "This Years Total At Bats", "Database Updated" };
       String select;
       if (currentPlayer >= 0) {
@@ -206,20 +206,20 @@ public class StatsForWeather {
             switch (select) {
                case "Jersey Number":
                   curBat.setJerseyNumber(
-                        Integer.parseInt(JOptionPane.showInputDialog(null, "What is the batters new jersey number?",
+                        Integer.parseInt(JOptionPane.showInputDialog(null, "What is the batter's new jersey number?",
                               "Jersey Number: " + curBat.getJerseyNumber(), JOptionPane.QUESTION_MESSAGE)));
                   break;
                case "Last Name":
-                  curBat.setLastName(JOptionPane.showInputDialog(null, "What is the batters last name?",
+                  curBat.setLastName(JOptionPane.showInputDialog(null, "What is the batter's last name?",
                         "Last Name: " + curBat.getLastName(), JOptionPane.QUESTION_MESSAGE));
                   break;
                case "First Name":
-                  curBat.setFirstName(JOptionPane.showInputDialog(null, "What is the batters first name?",
+                  curBat.setFirstName(JOptionPane.showInputDialog(null, "What is the batter's first name?",
                         "First Name: " + curBat.getFirstName(), JOptionPane.QUESTION_MESSAGE));
                   break;
                case "Bat Dominance":
                   curBat.setBatDominance((String) JOptionPane.showInputDialog(null, "What side does the batter bat on?",
-                        "Bat Dominance (Right:Left:Swtich): " + curBat.getBatDominance(), JOptionPane.QUESTION_MESSAGE,
+                        "Bat Dominance (Right:Left:Switch): " + curBat.getBatDominance(), JOptionPane.QUESTION_MESSAGE,
                         null, battingSide, battingSide[0]));
                   break;
                case "Last Years Total Hits":
@@ -247,7 +247,7 @@ public class StatsForWeather {
                         "How many hits did the batter get when the temperature was optimal this year?",
                         "This Years Optimal Hits: " + curBat.getTyOptHits(), JOptionPane.QUESTION_MESSAGE)));
                   break;
-               case "This Years At Bats":
+               case "This Years Total At Bats":
                   curBat.setTyAtBats(Integer.parseInt(
                         JOptionPane.showInputDialog(null, "How many at bats has this batter gotten this year??",
                               "This Years Total At Bats: " + curBat.getTyAtBats(), JOptionPane.QUESTION_MESSAGE)));
