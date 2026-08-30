@@ -103,33 +103,10 @@ public class StatsForWeather {
       BatterwStats np;
       do {
          np = new BatterwStats();
-         do {
-            try {
-               input = JOptionPane.showInputDialog(null, "What jersey number does the batter wear?");
-               np.setJerseyNumber(Integer.parseInt(input));
-            } catch (Exception e) {
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter jersey number!\n(e.g., 25, 30, 55)",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-               input = null;
-            }
-         } while (input == null || input.length() == 0);
-         do {
-            input = (String) JOptionPane.showInputDialog(null, "What is the batters last name?", "Last Name",
-                  JOptionPane.PLAIN_MESSAGE);
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null,
-                     "ERROR!\nPlease enter a last name!\n(e.g., Robinson, James, Bryant )",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setLastName(input);
-         do {
-            input = JOptionPane.showInputDialog(null, "What is the batters first name?", "first Name",
-                  JOptionPane.PLAIN_MESSAGE);
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter a first name!\n(e.g., John, James, Eddy )",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setFirstName(input);
+         np.setJerseyNumber(JOptionVCheck.getIntDialog("What jersey number does the batter wear?", "Batter's Jersey Number", "Please enter an integer (Example: 3)"));
+         np.setLastName(JOptionVCheck.getTextDialog("What is the batters last name?", "Batter's Last Name", "Please enter a string (Example: James)"));
+
+         np.setFirstName(JOptionVCheck.getTextDialog("What is the batters first name?", "Batter's First Name", "Please enter a string (Example: Paul)"));
          do {
             input = (String) JOptionPane.showInputDialog(null, "What side does the batter bat on?", "Bat Dominance",
                   JOptionPane.QUESTION_MESSAGE, null, battingSide, battingSide[0]);
@@ -138,50 +115,12 @@ public class StatsForWeather {
                      "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
          } while (input == null || input.length() == 0);
          np.setBatDominance(input); // no option
-         do {
-            input = JOptionPane.showInputDialog(null, "How many total hits did the batter get last year?");
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter last years total hits!",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setLyTotalHits(Integer.parseInt(input));
-         do {
-            input = JOptionPane.showInputDialog(null,
-                  "How many hits did the batter get when the temperature was optimal last year?");
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter last years optimal hits!",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setLyOptHits(Integer.parseInt(input));
-         do {
-            input = JOptionPane.showInputDialog(null, "How many at bats did the batter get last year?");
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter last years at bats!",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setLyAtBats(Integer.parseInt(input));
-         do {
-            input = JOptionPane.showInputDialog(null, "How many total hits does the batter have this year?");
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter this years total hits!",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setTyTotalHits(Integer.parseInt(input));
-         do {
-            input = JOptionPane.showInputDialog(null,
-                  "How many hits does the batter have when the temperature was optimal year?");
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter this years optimal hits!",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setTyOptHits(Integer.parseInt(input));
-         do {
-            input = JOptionPane.showInputDialog(null, "How many at bats does the batter have last year?");
-            if (input == null || input.length() == 0)
-               JOptionPane.showMessageDialog(null, "ERROR!\nPlease enter this years at bats!",
-                     "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
-         } while (input == null || input.length() == 0);
-         np.setTyAtBats(Integer.parseInt(input));
+         np.setLyTotalHits(JOptionVCheck.getIntDialog("How many total hits did the batter get last year?", "Batter's Total Hits Last Year", "Please enter an integer (Example: 3)"));
+         np.setLyOptHits(JOptionVCheck.getIntDialog("How many hits did the batter get when the temperature was optimal last year?", "Batter's Total Optimal Hits Last Year", "Please enter an integer (Example: 3)"));
+         np.setLyAtBats(JOptionVCheck.getIntDialog("How many at bats did the batter get last year?", "Batter's Total At Bats Last Year", "Please enter an integer (Example: 3)"));
+         np.setTyTotalHits(JOptionVCheck.getIntDialog("How many total hits does the batter have this year?", "Batter's Total Hits This Year", "Please enter an integer (Example: 3)"));
+         np.setTyOptHits(JOptionVCheck.getIntDialog("How many hits does the batter have when the temperature was optimal this year?", "Batter's Total Optimal Hits This Year", "Please enter an integer (Example: 3)"));
+         np.setTyAtBats(JOptionVCheck.getIntDialog("How many at bats does the batter have this year?", "Batter's Total At Bats This Year", "Please enter an integer (Example: 3)"));
          listOfPlayers.add(np);
          JOptionPane.showMessageDialog(null, "Nationals Player Information:\n" + np, "Player #" +
                np.getJerseyNumber(), JOptionPane.INFORMATION_MESSAGE, np.getImage());
