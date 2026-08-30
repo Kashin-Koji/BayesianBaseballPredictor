@@ -142,54 +142,46 @@ public class StatsForWeather {
             select = (String) JOptionPane.showInputDialog(null, "Please select a Database option:", "Database Option",
                   JOptionPane.PLAIN_MESSAGE,
                   null, updateDatabase, updateDatabase[0]);
+
+            if (select == null) {
+               return;
+            }
+
             switch (select) {
                case "Jersey Number":
-                  curBat.setJerseyNumber(
-                        Integer.parseInt(JOptionPane.showInputDialog(null, "What is the batter's new jersey number?",
-                              "Jersey Number: " + curBat.getJerseyNumber(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setJerseyNumber(JOptionVCheck.getIntDialog("What jersey number does the batter wear now?", "Batter's Jersey Number", "Please enter an integer (Example: 3)"));
                   break;
                case "Last Name":
-                  curBat.setLastName(JOptionPane.showInputDialog(null, "What is the batter's last name?",
-                        "Last Name: " + curBat.getLastName(), JOptionPane.QUESTION_MESSAGE));
+                  curBat.setLastName(JOptionVCheck.getTextDialog("What is the batters last name now?", "Batter's Last Name", "Please enter a string (Example: James)"));
                   break;
                case "First Name":
-                  curBat.setFirstName(JOptionPane.showInputDialog(null, "What is the batter's first name?",
-                        "First Name: " + curBat.getFirstName(), JOptionPane.QUESTION_MESSAGE));
+                  curBat.setFirstName(JOptionVCheck.getTextDialog("What is the batters first name now?", "Batter's First Name", "Please enter a string (Example: Paul)"));
                   break;
                case "Bat Dominance":
-                  curBat.setBatDominance((String) JOptionPane.showInputDialog(null, "What side does the batter bat on?",
+                  String temp = (String) JOptionPane.showInputDialog(null, "What side does the batter bat on?",
                         "Bat Dominance (Right:Left:Switch): " + curBat.getBatDominance(), JOptionPane.QUESTION_MESSAGE,
-                        null, battingSide, battingSide[0]));
+                        null, battingSide, battingSide[0]);
+                  if (temp != null) {
+                     curBat.setBatDominance(temp);
+                  }
                   break;
                case "Last Years Total Hits":
-                  curBat.setLyTotalHits(Integer
-                        .parseInt(JOptionPane.showInputDialog(null, "How many hits did the batter get last year?",
-                              "Last Years Total Hits: " + curBat.getLyTotalHits(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setLyTotalHits(JOptionVCheck.getIntDialog("How many total hits did the batter get last year?", "Batter's Total Hits Last Year", "Please enter an integer (Example: 3)"));
                   break;
                case "Last Years Optimal Hits":
-                  curBat.setLyOptHits(Integer.parseInt(JOptionPane.showInputDialog(null,
-                        "How many hits did the batter get when the temperature was optimal last year?",
-                        "Last Years Optimal Hits: " + curBat.getLyOptHits(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setLyOptHits(JOptionVCheck.getIntDialog("How many hits did the batter get when the temperature was optimal last year?", "Batter's Total Optimal Hits Last Year", "Please enter an integer (Example: 3)"));
                   break;
                case "Last Years Total At Bats":
-                  curBat.setLyAtBats(Integer
-                        .parseInt(JOptionPane.showInputDialog(null, "How many at bats did the batter get last year?",
-                              "Last Years Total Hits: " + curBat.getLyAtBats(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setLyAtBats(JOptionVCheck.getIntDialog("How many at bats did the batter get last year?", "Batter's Total At Bats Last Year", "Please enter an integer (Example: 3)"));
                   break;
                case "This Years Total Hits":
-                  curBat.setTyTotalHits(Integer
-                        .parseInt(JOptionPane.showInputDialog(null, "How many hits has this batter gotten this year?",
-                              "This Years Total Hits: " + curBat.getTyTotalHits(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setTyTotalHits(JOptionVCheck.getIntDialog("How many total hits does the batter have this year?", "Batter's Total Hits This Year", "Please enter an integer (Example: 3)"));
                   break;
                case "This Years Optimal Hits":
-                  curBat.setTyOptHits(Integer.parseInt(JOptionPane.showInputDialog(null,
-                        "How many hits did the batter get when the temperature was optimal this year?",
-                        "This Years Optimal Hits: " + curBat.getTyOptHits(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setTyOptHits(JOptionVCheck.getIntDialog("How many hits does the batter have when the temperature was optimal this year?", "Batter's Total Optimal Hits This Year", "Please enter an integer (Example: 3)"));
                   break;
                case "This Years Total At Bats":
-                  curBat.setTyAtBats(Integer.parseInt(
-                        JOptionPane.showInputDialog(null, "How many at bats has this batter gotten this year??",
-                              "This Years Total At Bats: " + curBat.getTyAtBats(), JOptionPane.QUESTION_MESSAGE)));
+                  curBat.setTyAtBats(JOptionVCheck.getIntDialog("How many at bats does the batter have this year?", "Batter's Total At Bats This Year", "Please enter an integer (Example: 3)"));
                   break;
             }
          } while (!select.equals("Database Updated"));
@@ -296,6 +288,7 @@ public class StatsForWeather {
    public static void find() {
       // To make sure the listOfPlayers is initialized
       if (listOfPlayers == null || listOfPlayers.isEmpty()) {
+         currentPlayer = -1;
          JOptionPane.showMessageDialog(null, "No players loaded.");
          return;
       }
