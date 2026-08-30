@@ -20,23 +20,10 @@ import java.util.Arrays;
 import java.util.ArrayList;
 
 public class StatsForWeather {
-   // Improvements
-   // ImageIcon
-   // FileReader
-   // Map and Hashmap
-   // Gson
-   // Json
-   // Url
-   // Url connection
-   // StreamReader
-   // BufferReader
-   // Bayes' Theroem
-   // Apache
-   // Excel integration
 
    // Total player hits during optimal weather conditions (56-75) //
    int totalPlayerHits_Optimal = 0;
-   // Bayes' Theorem = P(A|B) = (P(B|A) * P(A))/P(B)//
+   // Bayes' Theorem = P(A|B) = (P(B|A) * P(A))/P(B) //
    public static ArrayList<BatterwStats> listOfPlayers = new ArrayList<>();
    private static ArrayList<NationalsPlayer> listOfGames = new ArrayList<NationalsPlayer>();
    private static int currentPlayer = -1;
@@ -99,14 +86,16 @@ public class StatsForWeather {
    public static void addBatter() {
       boolean flag;
       String input = "";
-      // Create an new object in ArrayList
       BatterwStats np;
       do {
          np = new BatterwStats();
-         np.setJerseyNumber(JOptionVCheck.getIntDialog("What jersey number does the batter wear?", "Batter's Jersey Number", "Please enter an integer (Example: 3)"));
-         np.setLastName(JOptionVCheck.getTextDialog("What is the batters last name?", "Batter's Last Name", "Please enter a string (Example: James)"));
+         np.setJerseyNumber(JOptionVCheck.getIntDialog("What jersey number does the batter wear?",
+               "Batter's Jersey Number", "Please enter an integer (Example: 3)"));
+         np.setLastName(JOptionVCheck.getTextDialog("What is the batters last name?", "Batter's Last Name",
+               "Please enter a string (Example: James)"));
 
-         np.setFirstName(JOptionVCheck.getTextDialog("What is the batters first name?", "Batter's First Name", "Please enter a string (Example: Paul)"));
+         np.setFirstName(JOptionVCheck.getTextDialog("What is the batters first name?", "Batter's First Name",
+               "Please enter a string (Example: Paul)"));
          do {
             input = (String) JOptionPane.showInputDialog(null, "What side does the batter bat on?", "Bat Dominance",
                   JOptionPane.QUESTION_MESSAGE, null, battingSide, battingSide[0]);
@@ -115,12 +104,20 @@ public class StatsForWeather {
                      "ERROR MESSAGE", JOptionPane.ERROR_MESSAGE);
          } while (input == null || input.length() == 0);
          np.setBatDominance(input); // no option
-         np.setLyTotalHits(JOptionVCheck.getIntDialog("How many total hits did the batter get last year?", "Batter's Total Hits Last Year", "Please enter an integer (Example: 3)"));
-         np.setLyOptHits(JOptionVCheck.getIntDialog("How many hits did the batter get when the temperature was optimal last year?", "Batter's Total Optimal Hits Last Year", "Please enter an integer (Example: 3)"));
-         np.setLyAtBats(JOptionVCheck.getIntDialog("How many at bats did the batter get last year?", "Batter's Total At Bats Last Year", "Please enter an integer (Example: 3)"));
-         np.setTyTotalHits(JOptionVCheck.getIntDialog("How many total hits does the batter have this year?", "Batter's Total Hits This Year", "Please enter an integer (Example: 3)"));
-         np.setTyOptHits(JOptionVCheck.getIntDialog("How many hits does the batter have when the temperature was optimal this year?", "Batter's Total Optimal Hits This Year", "Please enter an integer (Example: 3)"));
-         np.setTyAtBats(JOptionVCheck.getIntDialog("How many at bats does the batter have this year?", "Batter's Total At Bats This Year", "Please enter an integer (Example: 3)"));
+         np.setLyTotalHits(JOptionVCheck.getIntDialog("How many total hits did the batter get last year?",
+               "Batter's Total Hits Last Year", "Please enter an integer (Example: 3)"));
+         np.setLyOptHits(JOptionVCheck.getIntDialog(
+               "How many hits did the batter get when the temperature was optimal last year?",
+               "Batter's Total Optimal Hits Last Year", "Please enter an integer (Example: 3)"));
+         np.setLyAtBats(JOptionVCheck.getIntDialog("How many at bats did the batter get last year?",
+               "Batter's Total At Bats Last Year", "Please enter an integer (Example: 3)"));
+         np.setTyTotalHits(JOptionVCheck.getIntDialog("How many total hits does the batter have this year?",
+               "Batter's Total Hits This Year", "Please enter an integer (Example: 3)"));
+         np.setTyOptHits(JOptionVCheck.getIntDialog(
+               "How many hits does the batter have when the temperature was optimal this year?",
+               "Batter's Total Optimal Hits This Year", "Please enter an integer (Example: 3)"));
+         np.setTyAtBats(JOptionVCheck.getIntDialog("How many at bats does the batter have this year?",
+               "Batter's Total At Bats This Year", "Please enter an integer (Example: 3)"));
          listOfPlayers.add(np);
          JOptionPane.showMessageDialog(null, "Nationals Player Information:\n" + np, "Player #" +
                np.getJerseyNumber(), JOptionPane.INFORMATION_MESSAGE, np.getImage());
@@ -149,13 +146,16 @@ public class StatsForWeather {
 
             switch (select) {
                case "Jersey Number":
-                  curBat.setJerseyNumber(JOptionVCheck.getIntDialog("What jersey number does the batter wear now?", "Batter's Jersey Number", "Please enter an integer (Example: 3)"));
+                  curBat.setJerseyNumber(JOptionVCheck.getIntDialog("What jersey number does the batter wear now?",
+                        "Batter's Jersey Number", "Please enter an integer (Example: 3)"));
                   break;
                case "Last Name":
-                  curBat.setLastName(JOptionVCheck.getTextDialog("What is the batters last name now?", "Batter's Last Name", "Please enter a string (Example: James)"));
+                  curBat.setLastName(JOptionVCheck.getTextDialog("What is the batters last name now?",
+                        "Batter's Last Name", "Please enter a string (Example: James)"));
                   break;
                case "First Name":
-                  curBat.setFirstName(JOptionVCheck.getTextDialog("What is the batters first name now?", "Batter's First Name", "Please enter a string (Example: Paul)"));
+                  curBat.setFirstName(JOptionVCheck.getTextDialog("What is the batters first name now?",
+                        "Batter's First Name", "Please enter a string (Example: Paul)"));
                   break;
                case "Bat Dominance":
                   String temp = (String) JOptionPane.showInputDialog(null, "What side does the batter bat on?",
@@ -166,22 +166,31 @@ public class StatsForWeather {
                   }
                   break;
                case "Last Years Total Hits":
-                  curBat.setLyTotalHits(JOptionVCheck.getIntDialog("How many total hits did the batter get last year?", "Batter's Total Hits Last Year", "Please enter an integer (Example: 3)"));
+                  curBat.setLyTotalHits(JOptionVCheck.getIntDialog("How many total hits did the batter get last year?",
+                        "Batter's Total Hits Last Year", "Please enter an integer (Example: 3)"));
                   break;
                case "Last Years Optimal Hits":
-                  curBat.setLyOptHits(JOptionVCheck.getIntDialog("How many hits did the batter get when the temperature was optimal last year?", "Batter's Total Optimal Hits Last Year", "Please enter an integer (Example: 3)"));
+                  curBat.setLyOptHits(JOptionVCheck.getIntDialog(
+                        "How many hits did the batter get when the temperature was optimal last year?",
+                        "Batter's Total Optimal Hits Last Year", "Please enter an integer (Example: 3)"));
                   break;
                case "Last Years Total At Bats":
-                  curBat.setLyAtBats(JOptionVCheck.getIntDialog("How many at bats did the batter get last year?", "Batter's Total At Bats Last Year", "Please enter an integer (Example: 3)"));
+                  curBat.setLyAtBats(JOptionVCheck.getIntDialog("How many at bats did the batter get last year?",
+                        "Batter's Total At Bats Last Year", "Please enter an integer (Example: 3)"));
                   break;
                case "This Years Total Hits":
-                  curBat.setTyTotalHits(JOptionVCheck.getIntDialog("How many total hits does the batter have this year?", "Batter's Total Hits This Year", "Please enter an integer (Example: 3)"));
+                  curBat.setTyTotalHits(
+                        JOptionVCheck.getIntDialog("How many total hits does the batter have this year?",
+                              "Batter's Total Hits This Year", "Please enter an integer (Example: 3)"));
                   break;
                case "This Years Optimal Hits":
-                  curBat.setTyOptHits(JOptionVCheck.getIntDialog("How many hits does the batter have when the temperature was optimal this year?", "Batter's Total Optimal Hits This Year", "Please enter an integer (Example: 3)"));
+                  curBat.setTyOptHits(JOptionVCheck.getIntDialog(
+                        "How many hits does the batter have when the temperature was optimal this year?",
+                        "Batter's Total Optimal Hits This Year", "Please enter an integer (Example: 3)"));
                   break;
                case "This Years Total At Bats":
-                  curBat.setTyAtBats(JOptionVCheck.getIntDialog("How many at bats does the batter have this year?", "Batter's Total At Bats This Year", "Please enter an integer (Example: 3)"));
+                  curBat.setTyAtBats(JOptionVCheck.getIntDialog("How many at bats does the batter have this year?",
+                        "Batter's Total At Bats This Year", "Please enter an integer (Example: 3)"));
                   break;
             }
          } while (!select.equals("Database Updated"));
@@ -196,7 +205,7 @@ public class StatsForWeather {
    public static void predict() throws IOException {
       boolean flagNGames = true;
       double probOfOptTemp;
-      
+
       String excelFilePath = "statPre//TempRangeData.xlsx";
 
       do {
@@ -204,7 +213,7 @@ public class StatsForWeather {
          NationalsPlayer ng = new NationalsPlayer(); // ng stands for new game
          find();
 
-         // Return to main if no player was selected // 
+         // Return to main if no player was selected //
          if (currentPlayer < 0) {
             return;
          }
@@ -215,27 +224,25 @@ public class StatsForWeather {
          ng.setNewGame(JOptionVCheck.getIntDialog("What game number is this?", "Game Number?",
                "The game number must be an integer."));
 
-         // Create the city map //
          Map<String, String> cities = WeatherAPI.createMap();
 
          String[] key = cities.keySet().toArray(new String[0]);
          Arrays.sort(key);
 
-         // My API Key For Connecion//
          String API_Key = System.getenv("OPENWEATHER_API_KEY");
 
-         // User Location//
-         // User Input//
-         // Cast Object To String//
+         // User Location //
+         // User Input //
+         // Cast Object To String //
          String question = (String) JOptionPane.showInputDialog(null,
                "Which stadium are the Washington Nationals playing in?",
                "Teams", JOptionPane.PLAIN_MESSAGE, null, key, key[0]);
-         
+
          // Return to main menu //
          if (question == null) {
             return;
          }
-         
+
          String location = cities.get(question);
          ng.setTeamAgainst((String) question);
          System.out.println();
@@ -257,9 +264,10 @@ public class StatsForWeather {
          int gameData[] = ExcelInputOutput.getPlayerLog(selectedPlayer, ng, excelFilePath);
 
          if (gameData[0] > 0 && gameData[1] > 0) {
-            probOfOptTemp = Statistics.calculateOptimalTempProb(gameData[0], gameData[1]); 
+            probOfOptTemp = Statistics.calculateOptimalTempProb(gameData[0], gameData[1]);
          } else {
-            JOptionPane.showMessageDialog(null, "There is not enough temperature data to make a prediction for " + ng.getGameTemp() + " degrees.");
+            JOptionPane.showMessageDialog(null,
+                  "There is not enough temperature data to make a prediction for " + ng.getGameTemp() + " degrees.");
             continue;
          }
 
@@ -314,6 +322,5 @@ public class StatsForWeather {
          currentPlayer = -1;
       }
    }
-
 
 }

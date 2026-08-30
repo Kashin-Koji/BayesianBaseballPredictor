@@ -49,6 +49,7 @@ public class ExcelInputOutput {
                     tempColumnIndex = 17;
                 } else if (ng.getGameTemp() <= 105) {
                     tempColumnIndex = 20;
+                    // Prevent prediction when historical weather data is unavailable //
                 } else {
                     System.out.println("There is no temperature data available for " + ng.getGameTemp() + " degrees.");
                 }
@@ -85,7 +86,7 @@ public class ExcelInputOutput {
         Sheet sheet = workbook.getSheetAt(0);
 
         for (Row row : sheet) {
-            // Skipping the header row
+            // Skipping the header row //
 
             if (row.getRowNum() == 0)
                 continue;
@@ -105,7 +106,7 @@ public class ExcelInputOutput {
                 player.setTyAtBats((int) row.getCell(9).getNumericCellValue());
 
                 listOfPlayers.add(player);
-                System.out.println("Added player: " + player); // Debugging line
+                System.out.println("Added player: " + player); // Debugging line //
             } catch (Exception e) {
                 System.out.println("Error processing row " + row.getRowNum() + ": " + e.getMessage());
             }
@@ -124,7 +125,7 @@ public class ExcelInputOutput {
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Player Stats");
 
-        // Assuming the first row contains headers
+        // Assuming the first row contains headers //
         String[] headers = { "Jersey Number", "Last Name", "First Name", "Bat Dominance",
                 "LY Total Hits", "LY Opt Hits", "LY At Bats",
                 "TY Total Hits", "TY Opt Hits", "TY At Bats" };
@@ -172,12 +173,12 @@ public class ExcelInputOutput {
             workbook = new XSSFWorkbook(inputStream);
             sheet = workbook.getSheetAt(0);
         } else {
-            // Create new workbook and sheet
+            // Create new workbook and sheet //
             workbook = new XSSFWorkbook();
             sheet = workbook.createSheet("Predictions");
         }
 
-        // Create header row if workbook is new
+        // Create header row if workbook is new //
         if (file.length() == 0) {
             Row headerRow = sheet.createRow(0);
             String[] headers = { "Team Against", "Game Number", "Game Temperature", "Predicted Player Avg Ty",
@@ -188,7 +189,7 @@ public class ExcelInputOutput {
             }
         }
 
-        // Append data
+        // Append data //
         int rowCount = sheet.getLastRowNum() + 1;
         for (NationalsPlayer ng : listOfGames) {
             BatterwStats player = ng.getPlayer();
@@ -206,8 +207,8 @@ public class ExcelInputOutput {
             row.createCell(10).setCellValue(player.getFirstName());
         }
 
-        // Sort by last name and first name
-        if (rowCount > 1) { // If there's data to sort
+        // Sort by last name and first name //
+        if (rowCount > 1) { // If there's data to sort //
             List<Row> rows = new ArrayList<>();
             for (int i = 1; i < rowCount; i++) {
                 rows.add(sheet.getRow(i));
@@ -215,7 +216,7 @@ public class ExcelInputOutput {
             rows.sort(
                     Comparator.comparing(r -> r.getCell(9).getStringCellValue() + r.getCell(10).getStringCellValue()));
 
-            // Rows in sorted order
+            // Rows in sorted order //
             int rowId = 1;
             for (Row rowData : rows) {
                 Row row = CellUtil.getRow(rowId++, sheet);
@@ -229,18 +230,17 @@ public class ExcelInputOutput {
                         case NUMERIC:
                             cell.setCellValue(c.getNumericCellValue());
                             break;
-                        // I can add more other cases if necessary such as if my data is expanded!!!!!!!
+                        // I can add more other cases if necessary such as if my data is expanded! //
                     }
                 }
             }
         }
 
-        // Write changes to the file
+        // Write changes to the file //
         try (FileOutputStream outputStream = new FileOutputStream(filename)) {
             workbook.write(outputStream);
         }
 
-        // Close workbook
         workbook.close();
         System.out.println("Predictions saved to Excel file.");
 

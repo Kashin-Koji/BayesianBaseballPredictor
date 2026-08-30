@@ -13,7 +13,7 @@ import java.net.URLConnection;
 
 public class WeatherAPI {
 
-    // Convert JSON to Map//
+    // Convert JSON to Java Map //
     // Gson is an open-source Java library to serialize and deserialize Java objects
     // to JSON//
     public static Map<String, Object> jsonToMap(String str) {
@@ -48,8 +48,7 @@ public class WeatherAPI {
     public static Map<String, String> createMap() {
 
         Map<String, String> cities = new HashMap<>();
-        // Key:Value// //Key is has to be unique, but Value can be same-2 teams in
-        // Chicago//
+        // (Key:Value) Map each MLB team to it's city ID //
         cities.put("Milwaukee Brewers", "5263045");
         cities.put("Los Angeles Angels", "5323810");
         cities.put("St. Louis Cardinals", "4407066");
