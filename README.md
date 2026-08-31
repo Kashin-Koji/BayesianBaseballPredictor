@@ -2,6 +2,17 @@
 
 A Java application that combines statistical methods, MLB player statistics, and real world weather data estimate a player's batting performance under certain game conditions (temperature).
 
+## Photos
+
+### Main Menu
+![Main Menu](Pictures/main-menu.png)
+
+### Player Data
+![Player Data](Pictures/batter-profile.png)
+
+### Weather Data
+![Weather Data](Pictures/weather-from-api.png)
+
 ## Overview
 
 I built this application to explore how weather conditions relate to baseball performance. The prototype only uses temperature, but this program can be expanded to use other weather attributes.
