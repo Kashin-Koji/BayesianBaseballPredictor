@@ -13,6 +13,9 @@ A Java application that combines statistical methods, MLB player statistics, and
 ### Weather Data
 ![Weather Data](Pictures/weather-from-api.png)
 
+### Prediction
+![Prediction](Pictures/prediction.png)
+
 ## Overview
 
 I built this application to explore how weather conditions relate to baseball performance. The prototype only uses temperature, but this program can be expanded to use other weather attributes.
