@@ -62,12 +62,12 @@ Note: Future iterations could make this a ML model by training the model on year
 
 ## Project Architecture
 
-### 'StatsForWeather'
+### `StatsForWeather`
 
 Acts as the main application.
 Controls all user interface functions.
 
-### 'Batter'
+### `Batter`
 
 Basic characteristics of a baseball player, which includes:
 
@@ -77,7 +77,7 @@ Basic characteristics of a baseball player, which includes:
 - Batting side
 - Player image
 
-### 'BatterwStats'
+### `BatterwStats`
 
 Extends 'Batter' and adds statistics, which includes:
 
@@ -89,7 +89,7 @@ Extends 'Batter' and adds statistics, which includes:
 - Current-season optimal-temperature hits
 - Batting averages
 
-### 'NationalsPlayer'
+### `NationalsPlayer`
 
 Information associated with game prediction, which includes:
 
@@ -99,7 +99,7 @@ Information associated with game prediction, which includes:
 - Game temperature
 - Predicted batting average
 
-### 'WeatherAPI'
+### `WeatherAPI`
 
 Handles retrieval of weather data from OpenWeather API.
 
@@ -109,7 +109,7 @@ Responsibilities include:
 - Parsing JSON responses using Gson
 - Mapping MLB teams to city ID's
 
-### 'ExcelInputOutput'
+### `ExcelInputOutput`
 
 Handles Excel file operations using Apache POI.
 
@@ -120,11 +120,11 @@ Responsibilities include:
 - Saving player statistics
 - Saving game predictions
 
-### 'Statistics'
+### `Statistics`
 
 - Bayes' Theorem calculation which separates the mathematical logic from main class
 
-### 'JOptionVCheck'
+### `JOptionVCheck`
 
 Provided I/O validation.
 
