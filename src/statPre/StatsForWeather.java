@@ -270,6 +270,11 @@ public class StatsForWeather {
 
          ng.setPredictedPlayerAvgTy(Statistics.calculatePredictedAverage(ng, probOfOptTemp));
 
+         JOptionPane.showMessageDialog(null,
+               selectedPlayer.getFirstName() + " " + selectedPlayer.getLastName() + "\nPredicted Batting Average: "
+                     + String.format("%.3f",ng.getPredictedPlayerAvgTy()) + "\nLast Years Batting Average: " + String.format("%.3f",selectedPlayer.getLyBattingAverage()),
+               "Game Prediction", JOptionPane.INFORMATION_MESSAGE, selectedPlayer.getImage());
+
          listOfGames.add(ng);
          flagNGames = JOptionPane.showConfirmDialog(null, "Do you want to predict another game?", "Predict Another?",
                JOptionPane.YES_NO_OPTION,
