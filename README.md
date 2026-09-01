@@ -1,6 +1,6 @@
 # Bayesian Baseball Predictor
 
-A Java application that combines statistical methods, MLB player statistics, and real world weather data estimate a player's batting performance under certain game conditions (temperature).
+A Java application that combines statistical methods, MLB player statistics, and real world weather data to estimate a player's batting performance under certain game conditions (temperature).
 
 ## Photos
 
